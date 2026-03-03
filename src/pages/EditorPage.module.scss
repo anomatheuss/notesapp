@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;0,800;1,400&family=Outfit:wght@400;700;800&display=swap');
+
+:root {
+  --sidebar-bg: #F1F6F1;
+  --sidebar-hover: #E2E2E2;
+  --text-main: #333333;
+  --text-muted: #8E8E8E;
+  --border-color: #E2E2E2;
+  --bg-app: #f1f6f1;
+  --brand-purple: #6e61ff;
+  --active-blue: var(--brand-purple);
+  --sidebar-text: #333333;
+  --bg-mint: #F1F6F1;
+  --dark-space: #29314D;
+  --sky-blue: #64a1ff;
+  --paled-blue: #ADDEFE;
+  --soft-orange: #FFA352;
+  --tangelo-orange: #FF611E;
+}
+
+$brutalist-border: 2.5px solid var(--dark-space);
+$brutalist-shadow: 4px 4px 0px var(--dark-space);
+
+@mixin brutalist-btn {
+  border: $brutalist-border;
+  box-shadow: $brutalist-shadow;
+  transition: all 0.1s ease;
+  &:hover {
+    background: var(--paled-blue) !important;
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0px var(--dark-space);
+  }
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--dark-space);
+  }
+}
+
+.pageContainer {
+  min-height: 100vh;
+  width: 100%;
+  background: #D6BCFF;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+  &.menuOpen::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(41, 49, 77, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 90;
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.appLayout {
+  display: flex;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 80px);
+  background: var(--dark-space);
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  border: 4px solid var(--dark-space);
+  box-shadow: 12px 12px 0px var(--dark-space);
+  border-radius: 30px;
+  position: relative;
+  z-index: 10;
+  padding: 0 6px 6px 0;
+}
+
+.mobileTopbar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: var(--sidebar-bg);
+  border-bottom: 2px solid var(--dark-space);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  
+  .hamburgerBtn {
+    background: none; border: none; color: var(--dark-space);
+    display: flex; align-items: center; padding: 4px; cursor: pointer;
+  }
+  .mobileLogo { font-family: 'Outfit'; font-size: 1.5rem; font-weight: 800; color: var(--brand-purple); }
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0 16px 0;
+  border-right: 1px solid rgba(0,0,0,0.05);
+  height: 100%;
+  position: relative;
+  z-index: 20;
+
+  .logo {
+    padding: 0 24px;
+    margin-bottom: 24px;
+    font-family: 'Outfit';
+    color: var(--brand-purple);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .closeMenuBtn { display: none; background: none; border: none; color: var(--dark-space); padding: 4px; }
+    
+    .brandGroup {
+      display: flex; flex-direction: column; line-height: 0.85;
+      .brandTop { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; }
+      .brandBottom { font-size: 3rem; font-weight: 800; margin-top: -6px; letter-spacing: -1px; }
+    }
+  }
+
+  .nav {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px; padding: 0 16px; flex: 1; overflow-y: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { width: 0px; }
+
+    .navItem {
+      display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 12px;
+      color: var(--text-main); background: white; font-weight: 700; margin-bottom: 12px;
+      @include brutalist-btn;
+
+      &:nth-child(1), &:nth-child(3) { border-bottom-width: 5px; }
+      &.active { box-shadow: 2.2px 2.2px 0px var(--dark-space); transform: translate(2.2px, 2.2px); }
+
+      .chevron { margin-left: auto; transition: transform 0.3s ease; }
+    }
+    
+    .folderItem {
+      display: flex; align-items: center; gap: 12px; padding: 10px 16px 10px 48px; border-radius: 12px;
+      color: var(--text-muted); cursor: pointer; font-size: 0.9rem;
+      &:hover { color: var(--text-main); background: rgba(0,0,0,0.05); }
+      &.active { font-weight: 600; }
+      .dot { width: 8px; height: 8px; border: 2px solid var(--dark-space); border-radius: 2px; }
+      .deleteBtn { margin-left: auto; opacity: 0; transition: 0.2s; padding: 4px; border-radius: 4px; }
+      &:hover .deleteBtn { opacity: 0.6; &:hover { opacity: 1; background: rgba(0,0,0,0.05); } }
+    }
+
+    .addFolderBtn {
+       padding-left: 48px; margin-top: 4px; color: var(--text-muted); font-size: 0.85rem;
+       cursor: pointer; display: flex; align-items: center; gap: 8px;
+       &:hover { color: var(--text-main); }
+    }
+
+    .newFolderInputWrapper {
+      padding: 0 16px 0 48px; margin-top: 4px;
+      .newFolderInput {
+        background: white; border: 1px solid var(--border-color); border-radius: 8px;
+        color: var(--text-main); padding: 6px 12px; font-size: 0.85rem; width: 100%; outline: none;
+      }
+    }
+  }
+
+  .userProfile {
+    padding: 16px; background: white; margin: 0 16px; border-radius: 16px;
+    display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid var(--border-color);
+
+    .userInfo {
+      display: flex; flex-direction: column; flex: 1; min-width: 0;
+      .userName { font-weight: 700; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .userRole { font-size: 0.8rem; opacity: 0.6; }
+    }
+  }
+}
+
+.notesPanel {
+  width: 320px; background: var(--bg-mint); border-right: 1px solid var(--border-color);
+  display: flex; flex-direction: column;
+
+  .panelHeader {
+    padding: 24px; display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    h3 { font-size: 1.1rem; font-weight: 700; margin: 0; }
+    .headerActions { display: flex; gap: 12px; color: var(--text-muted); cursor: pointer; svg:hover { color: var(--text-main); } }
+  }
+
+  .notesList {
+    list-style: none;
+    flex: 1; overflow-y: auto; padding: 12px 12px 60px 12px;
+    .noteItem {
+      padding: 16px; border-radius: 12px; cursor: pointer; margin-bottom: 8px; position: relative;
+      &:hover { background: rgba(0,0,0,0.04); }
+      &.active { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+      .noteTitle { font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .noteSnippet { font-size: 0.8rem; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .noteMeta { display: flex; justify-content: space-between; margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); }
+      .deleteNoteBtn {
+        position: absolute; right: 12px; top: 12px; opacity: 0; transition: 0.2s; padding: 6px; border-radius: 6px;
+        &:hover { background: #ffebeb; color: #ff4d4d; }
+      }
+      &:hover .deleteNoteBtn { opacity: 1; }
+    }
+  }
+
+  .addNoteBtn {
+    margin: 16px; padding: 12px; border: 1px solid var(--border-color); border-radius: 12px;
+    background: white; color: var(--text-main); font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    @include brutalist-btn;
+  }
+}
+
+.editorMain {
+  flex: 1; background: white; display: flex; flex-direction: column; overflow: hidden;
+
+  .toolbar {
+    background: var(--bg-mint); padding: 12px 24px; border-bottom: 1px solid var(--border-color);
+    display: flex; align-items: center; gap: 20px; color: var(--text-muted);
+
+    .toolGroup {
+      display: flex; align-items: center; gap: 12px; border-right: 1px solid var(--border-color); padding-right: 20px;
+      &:last-child { border-right: none; }
+      .toolBtn {
+        cursor: pointer; padding: 6px; border-radius: 6px; transition: 0.2s; color: #9CA3AF;
+        display: flex; align-items: center; justify-content: center; border: none; background: transparent;
+        &:hover { background: #F3F4F6; color: #111827; }
+        &.toolActive { background: rgba(110, 97, 255, 0.1); color: var(--brand-purple); }
+      }
+    }
+
+    .saveBtn { margin-left: auto; background: var(--bg-mint); font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 8px; white-space: nowrap; border-radius: 12px; padding: 8px 20px;
+      @include brutalist-btn;
+    }
+  }
+
+  .editorInner {
+    flex: 1; display: flex; flex-direction: column; padding: 30px 40px 60px 40px; overflow-y: auto; background: white;
+    .titleInput {
+      font-size: 2.25rem; font-weight: 800; border: none; outline: none; width: 100%; margin-bottom: 24px;
+      font-family: 'Inter', sans-serif; &::placeholder { color: #E5E7EB; }
+    }
+    .tiptapContainer {
+      flex: 1;
+      :global(.tiptap) {
+        outline: none; font-size: 1.15rem; line-height: 1.8; color: #374151; min-height: 400px;
+        p.is-editor-empty:first-child::before { content: attr(data-placeholder); float: left; color: #ADB5BD; pointer-events: none; height: 0; }
+        strong { font-weight: 800; color: #111827; }
+        blockquote { border-left: 4px solid var(--brand-purple); padding-left: 20px; margin: 20px 0; color: #6B7280; font-style: italic; }
+        code { background: #F3F4F6; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--brand-purple); }
+        ul, ol { 
+          padding-left: 2rem; 
+          margin: 1rem 0;
+          li { 
+            margin-bottom: 0.25em; 
+            p { margin: 0; display: block; }
+          }
+        }
+        ul { list-style-type: disc; }
+        ol { list-style-type: decimal; }
+      }
+    }
+  }
+}
+
+.calendarWrapper {
+  flex: 1; padding: 40px; overflow-y: auto; background: white;
+  .calendarHeader {
+    margin-bottom: 48px; text-align: center;
+    h2 { 
+      display: inline-block; font-size: 1.75rem; font-weight: 800; color: var(--dark-space); 
+      background: var(--sidebar-bg); padding: 12px 40px; border-radius: 999px; text-transform: uppercase;
+      @include brutalist-btn;
+    }
+    p { color: var(--text-muted); font-weight: 600; font-size: 1.1rem; }
+  }
+  .calendarGrid {
+    display: grid; grid-template-columns: repeat(7, 1fr); gap: 16px;
+    .dayHeader { text-align: center; font-weight: 800; opacity: 0.5; padding-bottom: 12px; font-size: 0.85rem; text-transform: uppercase; }
+    .calendarDay {
+      aspect-ratio: 1.1; background: white; border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 8px;
+      border: 2px solid rgba(41,49,77,0.05); transition: 0.2s;
+      &:hover { background: var(--paled-blue); border-color: var(--dark-space); transform: translateY(-4px); box-shadow: 4px 4px 0px var(--dark-space); }
+      &.today { background: var(--soft-orange); border-color: var(--dark-space); box-shadow: 4px 4px 0px var(--dark-space); .dayNumber { color: white; font-weight: 800; } .noteDot { background: white; color: var(--dark-space); } }
+      .dayNumber { font-weight: 700; color: var(--dark-space); font-size: 1.1rem; }
+      .noteDot { width: 100%; background: var(--paled-blue); color: var(--dark-space); font-size: 0.75rem; font-weight: 600; padding: 4px 8px; border-radius: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid rgba(41,49,77,0.1); }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .appLayout { width: calc(100vw - 40px); height: calc(100vh - 40px); }
+  .sidebar { width: 200px; }
+  .notesPanel { width: 260px; }
+  .calendarGrid { gap: 8px; }
+}
+
+@media (max-width: 768px) {
+  .pageContainer { padding: 0; align-items: flex-start; }
+  .appLayout { flex-direction: column; width: 100%; height: 100vh; border: none; border-radius: 0; box-shadow: none; padding: 0; overflow: hidden; }
+  .mobileTopbar { display: flex; }
+  .sidebar {
+    position: fixed; inset: 0 0 0 0; width: 280px; z-index: 100; box-shadow: 20px 0 0 rgba(41,49,77,0.1);
+    transform: translateX(-110%); transition: transform 0.3s ease; border-right: 3px solid var(--dark-space);
+    &.sidebarOpen { transform: translateX(0); }
+    .logo { padding: 0 20px; margin-bottom: 32px; .closeMenuBtn { display: flex; } .brandTop { font-size: 1.5rem; } .brandBottom { display: none; } }
+    .nav { padding: 0 20px; gap: 12px; .navItem { margin: 0 0 16px 0 !important; width: 100%; padding: 14px 20px; font-size: 1.1rem; .chevron { display: none; } } .folderItem { padding: 12px 16px 12px 56px; font-size: 1rem; } .addFolderBtn { padding-left: 56px; font-size: 1rem; margin-top: 12px; margin-bottom: 24px; } .newFolderInputWrapper { display: none; } }
+    .userProfile { display: none; }
+  }
+  .notesPanel { width: 100%; height: 40vh; max-height: none; border-right: none; border-bottom: 2px solid var(--border-color); flex-shrink: 0; }
+  .toolbar { padding: 12px 20px; gap: 12px; flex-wrap: wrap; height: auto; .toolGroup { padding-right: 12px; margin-bottom: 4px; } .saveBtn { padding: 6px 12px; font-size: 0.85rem; margin-left: 0; } }
+  .editorInner { padding: 20px 20px 40px 20px; .titleInput { font-size: 1.75rem; } .tiptapContainer :global(.tiptap) { font-size: 1rem; } }
+  .calendarWrapper { padding: 20px; .calendarHeader h2 { font-size: 1.25rem; padding: 8px 24px; } .calendarGrid { grid-template-columns: repeat(2, 1fr); .dayHeader { display: none; } .calendarDay { aspect-ratio: auto; min-height: 80px; } } }
+}
+
+@media (max-width: 480px) {
+  .calendarGrid { grid-template-columns: 1fr; }
+}
