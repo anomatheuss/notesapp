@@ -1,6 +1,6 @@
 # 📓 NotesWeb — My Journey Building a Modern Note App
 
-This is a project I've been working on to level up my React skills. I wanted to build something I would actually use—a note-taking app that doesn't look like every other generic "clean" app. Instead, I went with a **Neo-Brutalist design**: thick borders, bold shadows, and colors that pop.
+This is a project I've been working on to level up my React skills. I wanted to build something I would actually use—a note-taking app that doesn't look like every other generic "clean" app. Instead, I went with a **fun and colorful design**: big borders, cool shadows, and colors that really stand out.
 
 ## 🚀 What this does
 It's a full-featured workspace where I can:
@@ -20,13 +20,13 @@ I used `useState` to keep track of everything: which note is active, which folde
 It turns out making a text editor is hard! I used the **Tiptap** framework. I had to figure out how to bridge the gap between "standard React" and Tiptap's "command-based" system. I built a custom toolbar where I had to chain commands together (like focusing the editor while applying bold) to make the user experience feel smooth.
 
 ### 3. SASS & Design Mixins
-Instead of writing the same CSS over and over, I used **SCSS**. I created a "mixin" (sort of like a reusable function for styles) for my brutalist buttons. This allowed me to keep the design consistent across the sidebar, trash buttons, and save controls without a huge, messy CSS file.
+Instead of writing the same CSS over and over, I used **SCSS**. I created a "mixin" (sort of like a reusable function for styles) for my custom buttons. This allowed me to keep the design consistent across the sidebar, trash buttons, and save controls without a huge, messy CSS file.
 
 ### 4. SPA Routing
 I didn't use a heavy router library for this. Instead, I built a simple system where the app decides what to show (Note List vs. Calendar) based on the state. It makes the app feel super fast since it never actually "loads" a new page.
 
 ## 🧠 What I Learnt as a Student
-- **CSS is powerful**: I realized how much of a "premium" feel comes from small details like box-shadows and transitions. Fixing the list-style bug (where my global reset broke the editor bullets) was a huge "aha!" moment for me regarding CSS specificity.
+- **CSS is powerful**: I realized how much of a "premium" feel comes from small details like the shadows and transitions. Fixing the list-style bug (where my global reset broke the editor bullets) was a huge "aha!" moment for me regarding CSS specificity.
 - **State Flow**: Passing data between `App.jsx` and `EditorPage.jsx` made me much more comfortable with props and lifting state up.
 - **Problem Solving**: I spent a lot of time debugging why the editor wouldn't show the placeholder—it taught me to really look at the DOM structure and see where classes were missing.
 
