@@ -1,69 +1,40 @@
-# 📓 NotesWeb — A Space for Your Mind
+# 📓 NotesWeb — My Journey Building a Modern Note App
 
-**NotesWeb** is a high-performance, modern note-taking application designed with a **Brutalist Aesthetic**. It combines a sleek, high-contrast user interface with a powerful rich-text editing experience, allowing users to organize their thoughts, tasks, and ideas seamlessly.
+This is a project I've been working on to level up my React skills. I wanted to build something I would actually use—a note-taking app that doesn't look like every other generic "clean" app. Instead, I went with a **Neo-Brutalist design**: thick borders, bold shadows, and colors that pop.
 
-![NotesApp Showcase](https://github.com/anomatheuss/notesapp/raw/main/public/preview.png) *(Note: Add your own screenshot path here later!)*
+## 🚀 What this does
+It's a full-featured workspace where I can:
+- **Write in Rich Text**: I used Tiptap to allow formatting like Bold, Italic, and Lists.
+- **Stay Organized**: It has a folder system (Work, Personal, etc.) and a view to see notes on a calendar.
+- **Login Safely**: I integrated Clerk for authentication so I don't have to worry about building a secure login from scratch.
+- **Never Lose Work**: Everything saves automatically to my browser's `localStorage`.
 
-## 🚀 Key Features
+## 🛠️ The Tech Part (What I actually did)
 
--   **⚡ Rich Text Editing**: Powered by **Tiptap**, supporting bold, italic, blockquotes, code blocks, and dynamic lists.
--   **🎨 Brutalist Design**: A unique "Neo-Brutalist" UI using bold borders, sharp shadows, and a vibrant color palette (`#D6BCFF`, `#6e61ff`, `#29314D`).
--   **📅 Calendar View**: Visualize your notes over time with an integrated calendar component.
--   **📁 Folder Organization**: Categorize your ideas into Work, Personal, or custom folders.
--   **🔐 Secure Authentication**: Integrated with **Clerk** for robust user login and profile management.
--   **💾 Persistence**: Automatic saving to `localStorage` so you never lose a thought.
--   **📱 Fully Responsive**: A custom-built mobile layout with a specialized hamburger menu and optimized editor experience.
+Building this taught me a lot about how React actually works under the hood. Here’s a breakdown of the parts I'm most proud of:
 
-## 🛠️ Technical Implementation (What I Built)
+### 1. Handling the "Memory" of the App
+I used `useState` to keep track of everything: which note is active, which folder is open, and if the mobile menu is showing. The trickiest part was using `useEffect` to make sure my notes stayed saved even if I refreshed the page. I had to learn how to turn my objects into strings for `localStorage` and then back again.
 
-### 1. Robust State Management (`useState` & `useEffect`)
-One of the core challenges was synchronizing the editor's state with the application's global storage. I utilized:
--   **`useState`**: To manage active notes, folder selection, UI toggles (mobile menus), and the current active view (Notes vs. Calendar).
--   **`useEffect`**: To handle data persistence by stringifying state into `localStorage` whenever changes occur, ensuring a "save-less" feel for the user.
+### 2. Creating a Real Editor
+It turns out making a text editor is hard! I used the **Tiptap** framework. I had to figure out how to bridge the gap between "standard React" and Tiptap's "command-based" system. I built a custom toolbar where I had to chain commands together (like focusing the editor while applying bold) to make the user experience feel smooth.
 
-### 2. Advanced Component Architecture
-The project is modularized into several key areas:
--   **`EditorPage`**: The heart of the app, managing the complex lifecycle of the Tiptap editor and the various toolbars.
--   **Dynamic Sidebar**: A recursive-style navigation system that handles folder filtering and view switching.
--   **Custom SCSS Modules**: I chose **SASS Modules** over standard CSS to avoid naming collisions and to implement complex "Brutalist" mixins for reusable button styles.
+### 3. SASS & Design Mixins
+Instead of writing the same CSS over and over, I used **SCSS**. I created a "mixin" (sort of like a reusable function for styles) for my brutalist buttons. This allowed me to keep the design consistent across the sidebar, trash buttons, and save controls without a huge, messy CSS file.
 
-### 3. Routing & Conditional Rendering
-Instead of traditional multi-page navigation, I optimized the app as a **Single Page Application (SPA)** using state-driven conditional rendering. This provides a lightning-fast feel when switching between your Note List, the Editor, and the Calendar View.
+### 4. SPA Routing
+I didn't use a heavy router library for this. Instead, I built a simple system where the app decides what to show (Note List vs. Calendar) based on the state. It makes the app feel super fast since it never actually "loads" a new page.
 
-### 4. Integration of Tiptap
-Unlike simple textareas, I integrated the **Tiptap Framework** (built on ProseMirror). This required:
--   Configuring extensions like `StarterKit`, `Placeholder`, and `Markdown`.
--   Building a custom toolbar that uses command chaining (e.g., `editor.chain().focus().toggleBold().run()`) to ensure the user never loses focus while formatting.
+## 🧠 What I Learnt as a Student
+- **CSS is powerful**: I realized how much of a "premium" feel comes from small details like box-shadows and transitions. Fixing the list-style bug (where my global reset broke the editor bullets) was a huge "aha!" moment for me regarding CSS specificity.
+- **State Flow**: Passing data between `App.jsx` and `EditorPage.jsx` made me much more comfortable with props and lifting state up.
+- **Problem Solving**: I spent a lot of time debugging why the editor wouldn't show the placeholder—it taught me to really look at the DOM structure and see where classes were missing.
 
-## 🧠 What I Learned
-
-During the development of this repository, I gained deep experience in:
-
--   **Mastering the React Lifecycle**: Understanding how to prevent unnecessary re-renders when dealing with high-frequency text input.
--   **CSS Architecture**: Learning how to override global resets (like `list-style: none`) while maintaining a clean, scoped design system using SCSS Mixins.
--   **Third-Party Integrations**: Successfully merging **Clerk** (Auth), **Tiptap** (Editor), and **Lucide-React** (Icons) into a cohesive ecosystem.
--   **Mobile-First Design**: Challenging myself to rebuild the complex horizontal editor layout into a vertical, touch-friendly structure for mobile users.
--   **Git Workflow**: Managing version control, initializing repositories, and deploying code to GitHub.
-
-## 📦 Installation & Setup
-
-1. **Clone the repo**:
-   ```bash
-   git clone https://github.com/anomatheuss/notesapp.git
-   ```
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-3. **Environment Variables**:
-   Create a `.env` file and add your Clerk Publishable Key:
-   ```env
-   VITE_CLERK_PUBLISHABLE_KEY=your_key_here
-   ```
-4. **Run Dev Server**:
-   ```bash
-   npm run dev
-   ```
+## 📦 How to run it
+1. Clone it: `git clone https://github.com/anomatheuss/notesapp.git`
+2. Run `npm install`
+3. Add your `VITE_CLERK_PUBLISHABLE_KEY` to a `.env` file.
+4. Start it up: `npm run dev`
 
 ---
-*Created with ❤️ by [Matheus Luiz](https://github.com/anomatheuss)*
+*Built by [Matheus Luiz](https://github.com/anomatheuss)*
