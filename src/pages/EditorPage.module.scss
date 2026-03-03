@@ -227,6 +227,7 @@ $brutalist-shadow: 4px 4px 0px var(--dark-space);
 
     .saveBtn { margin-left: auto; background: var(--bg-mint); font-weight: 700; cursor: pointer;
       display: flex; align-items: center; gap: 8px; white-space: nowrap; border-radius: 12px; padding: 8px 20px;
+      color: var(--dark-space);
       @include brutalist-btn;
     }
   }
